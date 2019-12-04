@@ -9,6 +9,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.*
 import de.bergerapps.icewarning.R
 import kotlinx.android.synthetic.main.main_fragment.*
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class MainFragment : Fragment() {
@@ -33,6 +38,7 @@ class MainFragment : Fragment() {
             super.onLocationResult(locationResult)
 
             val mCurrentLocation = locationResult!!.lastLocation
+            progress.visibility=View.VISIBLE
             viewModel.getEiswarnung(
                 context!!,
                 mCurrentLocation!!.latitude.toString(),
@@ -64,13 +70,30 @@ class MainFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.eiswarnungLiveData.observe(this, Observer {
+            progress.visibility=View.GONE
             if (it == null) {
                 Toast.makeText(context, "null", Toast.LENGTH_LONG).show()
                 return@Observer
             }
-            forecast.text=it.result.forecastText
-            city.text=it.result.forecastCity
-            date.text=it.result.forecastDate
+            // Forecast Text
+            forecast.text = it.result.forecastText
+            // Forecast City
+            city.text = it.result.forecastCity
+
+            // Forecast Date
+            val dateSdf = SimpleDateFormat("yyyy-MM-dd").parse(it.result.forecastDate)
+            val dateDay = DateFormat.format("EEEE, dd.MM.yyyy", dateSdf)
+            date.text = "${dateDay}"
+
+            // Forecast Image
+            when (it.result.forecastId) {
+                0 -> imageView2.setImageDrawable(resources.getDrawable(R.drawable.not_ice))
+                1 -> imageView2.setImageDrawable(resources.getDrawable(R.drawable.ice))
+                else -> { // Note the block
+                    imageView2.setImageDrawable(resources.getDrawable(R.drawable.not_ice))
+                }
+            }
+
         })
 
     }
@@ -128,6 +151,8 @@ class MainFragment : Fragment() {
                     if (location == null) {
                         requestNewLocationData()
                     } else {
+                        progress.visibility=View.VISIBLE
+
                         viewModel.getEiswarnung(
                             context!!,
                             location.latitude.toString(),
