@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.*
 import de.bergerapps.icewarning.R
+import kotlinx.android.synthetic.main.main_fragment.*
 
 
 class MainFragment : Fragment() {
@@ -67,9 +68,9 @@ class MainFragment : Fragment() {
                 Toast.makeText(context, "null", Toast.LENGTH_LONG).show()
                 return@Observer
             }
-            Toast.makeText(
-                context,
-                "Forecast: ${it.result.forecastText}; City: ${it.result.forecastCity}; ForecastDate: ${it.result.forecastDate}", Toast.LENGTH_LONG).show()
+            forecast.text=it.result.forecastText
+            city.text=it.result.forecastCity
+            date.text=it.result.forecastDate
         })
 
     }
