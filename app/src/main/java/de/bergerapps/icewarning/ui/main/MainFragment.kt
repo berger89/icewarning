@@ -15,16 +15,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.work.Constraints
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.android.gms.location.*
 import de.bergerapps.icewarning.R
+import de.bergerapps.icewarning.worker.ForecastWorker
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class MainFragment : Fragment() {
@@ -38,7 +43,7 @@ class MainFragment : Fragment() {
             super.onLocationResult(locationResult)
 
             val mCurrentLocation = locationResult!!.lastLocation
-            progress.visibility=View.VISIBLE
+            progress.visibility = View.VISIBLE
             viewModel.getEiswarnung(
                 context!!,
                 mCurrentLocation!!.latitude.toString(),
@@ -70,30 +75,30 @@ class MainFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.eiswarnungLiveData.observe(this, Observer {
-            progress.visibility=View.GONE
+            progress.visibility = View.GONE
             if (it == null) {
                 Toast.makeText(context, "null", Toast.LENGTH_LONG).show()
                 return@Observer
             }
             // Forecast Text
-            forecast.text = it.result.forecastText
+            forecast.text = it.result?.forecastText
             // Forecast City
-            city.text = it.result.forecastCity
+            city.text = it.result?.forecastCity
 
             // Forecast Date
-            val dateSdf = SimpleDateFormat("yyyy-MM-dd").parse(it.result.forecastDate)
+            val dateSdf = SimpleDateFormat("yyyy-MM-dd").parse(it.result?.forecastDate!!)
             val dateDay = DateFormat.format("EEEE, dd.MM.yyyy", dateSdf)
-            date.text = "${dateDay}"
+            date.text = "$dateDay"
 
             // Forecast Image
-            when (it.result.forecastId) {
+            when (it.result?.forecastId) {
                 0 -> imageView2.setImageDrawable(resources.getDrawable(R.drawable.not_ice))
                 1 -> imageView2.setImageDrawable(resources.getDrawable(R.drawable.ice))
                 else -> { // Note the block
                     imageView2.setImageDrawable(resources.getDrawable(R.drawable.not_ice))
                 }
             }
-
+            Toast.makeText(context!!, "${it.callsLeft}", Toast.LENGTH_SHORT).show()
         })
 
     }
@@ -151,9 +156,10 @@ class MainFragment : Fragment() {
                     if (location == null) {
                         requestNewLocationData()
                     } else {
-                        progress.visibility=View.VISIBLE
+                        progress.visibility = View.VISIBLE
 
                         viewModel.getEiswarnung(
+
                             context!!,
                             location.latitude.toString(),
                             location.longitude.toString()

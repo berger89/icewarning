@@ -8,7 +8,7 @@ class Eiswarnung {
     var callsLeft: Int = 0
     var callsDailyLimit: Int = 0
     var callsResetInSeconds: Int = 0
-    lateinit var result: EiswarnungResult
+    var result: EiswarnungResult? = null
 
     inner class EiswarnungResult {
         lateinit var requestDate: String
