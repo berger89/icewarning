@@ -6,24 +6,26 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.work.Worker
-import androidx.work.WorkerParameters
+import com.evernote.android.job.DailyJob
+import com.evernote.android.job.JobRequest
 import de.bergerapps.icewarning.R
 import de.bergerapps.icewarning.service.repository.RestAPI
+import java.util.concurrent.TimeUnit
 
-class ForecastWorker(
-    private val context: Context, params: WorkerParameters) : Worker(context, params) {
+
+class MyDailyJob : DailyJob() {
 
     private val restAPI = RestAPI()
 
-    override fun doWork(): Result {
-
+    override fun onRunDailyJob(params: Params): DailyJobResult {
         restAPI.getEiswarnung(context, "52.386822", "10.586550") {
+            if (it?.result == null)
+                return@getEiswarnung
 
             val builder = NotificationCompat.Builder(context, "88")
                 .setSmallIcon(R.drawable.ic_stat_ac_unit)
-                .setContentTitle(context.getString(de.bergerapps.icewarning.R.string.app_name))
-                .setContentText(it?.result?.forecastText)
+                .setContentTitle(context.getString(R.string.app_name))
+                .setContentText(it.result?.forecastText)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
 
 
@@ -43,8 +45,20 @@ class ForecastWorker(
             }
         }
 
-        WorkerService.setupWorker(applicationContext)
+        return DailyJobResult.SUCCESS
+    }
 
-        return Result.success()
+    companion object {
+        const val TAG = "MyDailyJob"
+        var startMs = TimeUnit.HOURS.toMillis(15)
+        var endMs = TimeUnit.HOURS.toMillis(16)
+
+        fun schedule() {
+            schedule(
+                JobRequest.Builder(TAG),
+                startMs,
+                endMs
+            )
+        }
     }
 }

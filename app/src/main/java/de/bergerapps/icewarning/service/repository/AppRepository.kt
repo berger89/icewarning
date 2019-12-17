@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import de.bergerapps.icewarning.service.model.Eiswarnung
-import org.jetbrains.anko.AnkoAsyncContext
 import org.jetbrains.anko.doAsync
 import retrofit2.Call
 import retrofit2.Callback

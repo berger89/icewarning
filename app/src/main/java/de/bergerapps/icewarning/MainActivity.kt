@@ -1,14 +1,10 @@
 package de.bergerapps.icewarning
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.appcompat.app.AppCompatActivity
 import de.bergerapps.icewarning.ui.main.MainFragment
-import de.bergerapps.icewarning.worker.ForecastWorker
-import de.bergerapps.icewarning.worker.WorkerService
-import java.util.*
-import java.util.concurrent.TimeUnit
+import de.bergerapps.icewarning.worker.MyDailyJob
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        WorkerService.setupWorker(applicationContext)
+        MyDailyJob.schedule()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
