@@ -15,10 +15,6 @@ import de.bergerapps.icewarning.prediction.PredictionDailyJob
 import de.bergerapps.icewarning.util.SharedPrefUtil
 import kotlinx.android.synthetic.main.fragment_settings.*
 
-
-/**
- * A simple [Fragment] subclass.
- */
 class SettingsFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
 
     private lateinit var adapter: SettingsAdapter
