@@ -86,6 +86,8 @@ class MainFragment : Fragment() {
             when (it.result?.forecastId) {
                 0 -> imageView2.setImageDrawable(resources.getDrawable(R.drawable.not_ice))
                 1 -> imageView2.setImageDrawable(resources.getDrawable(R.drawable.ice))
+                2 -> imageView2.setImageDrawable(resources.getDrawable(R.drawable.ice))
+
                 else -> { // Note the block
                     imageView2.setImageDrawable(resources.getDrawable(R.drawable.not_ice))
                 }
