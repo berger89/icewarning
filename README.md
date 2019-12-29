@@ -3,7 +3,7 @@ Frost Warning - Native Android App
 
 Eis             |  Vielleicht Eis | Kein Eis
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src='screenshot_eis.png' width='90%'>  |  <img src='screenshot_vllt_eis.png' width='90%'> | <img src='screenshot_kein_eis.png' width='90%'>
+<img src='screenshot_eis.png' width='60%'>  |  <img src='screenshot_vllt_eis.png' width='60%'> | <img src='screenshot_kein_eis.png' width='60%'>
 
 Settings             |  Color Palette
 :-------------------------:|:-------------------------:
