@@ -1,9 +1,13 @@
 # icewarning-android
 Frost Warning - Native Android App 
 
-Eis             |  Vielleicht Eis | Kein Eis | Settings
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src='screenshot_eis.png' width='35%'>  |  <img src='screenshot_vllt_eis.png' width='35%'> | <img src='screenshot_kein_eis.png' width='35%'> | <img src='screenshot_settings.png' width='35%'>
+Eis             |  Vielleicht Eis | Kein Eis
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src='screenshot_eis.png' width='90%'>  |  <img src='screenshot_vllt_eis.png' width='90%'> | <img src='screenshot_kein_eis.png' width='90%'>
+
+Settings             |  Color Palette
+:-------------------------:|:-------------------------:
+<img src='screenshot_settings.png' width='25%'>  |  <img src='color_palette.jpg' width='50%'> |
 
 #### ko_fi: https://ko-fi.com/berger
 #### buymeacoffee: https://www.buymeacoffee.com/RW5zuJI
