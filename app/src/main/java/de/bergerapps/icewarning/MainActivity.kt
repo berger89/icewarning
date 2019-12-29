@@ -2,8 +2,10 @@ package de.bergerapps.icewarning
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import de.bergerapps.icewarning.ui.main.MainFragment
+import androidx.navigation.Navigation
+import androidx.navigation.ui.setupWithNavController
 import de.bergerapps.icewarning.worker.MyDailyJob
+import kotlinx.android.synthetic.main.main_activity.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -12,13 +14,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        MyDailyJob.schedule()
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        bttm_nav.setupWithNavController(navController)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commitNow()
-        }
+        MyDailyJob.schedule(applicationContext)
     }
 
 }

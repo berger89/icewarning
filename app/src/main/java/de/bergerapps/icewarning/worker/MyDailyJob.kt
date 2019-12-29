@@ -8,8 +8,11 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.evernote.android.job.DailyJob
 import com.evernote.android.job.JobRequest
+import de.bergerapps.icewarning.BuildConfig
+import de.bergerapps.icewarning.ForecastApplication
 import de.bergerapps.icewarning.R
 import de.bergerapps.icewarning.service.repository.RestAPI
+import org.jetbrains.anko.defaultSharedPreferences
 import java.util.concurrent.TimeUnit
 
 
@@ -49,15 +52,22 @@ class MyDailyJob : DailyJob() {
     }
 
     companion object {
-        const val TAG = "MyDailyJob"
-        var startMs = TimeUnit.HOURS.toMillis(15)
-        var endMs = TimeUnit.HOURS.toMillis(16)
 
-        fun schedule() {
+        const val TAG = "MyDailyJob"
+        var startHour = TimeUnit.HOURS.toMillis(15)
+
+        fun schedule(context: Context) {
+            startHour = TimeUnit.HOURS.toMillis(
+                context.getSharedPreferences("frostwarning", 0).getLong(
+                    "start",
+                    15
+                )
+            )
+
             schedule(
                 JobRequest.Builder(TAG),
-                startMs,
-                endMs
+                startHour + 0,
+                startHour + 1
             )
         }
     }

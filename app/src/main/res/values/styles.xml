@@ -8,4 +8,26 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="info_title">
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="info_description">
+        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="textColorAlertDialogListItem">@color/blue2</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/blue1</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+    </style>
+
 </resources>
