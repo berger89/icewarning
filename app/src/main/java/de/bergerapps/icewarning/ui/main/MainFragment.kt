@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.*
 import de.bergerapps.icewarning.R
+import de.bergerapps.icewarning.util.SharedPrefUtil
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.text.SimpleDateFormat
 
@@ -28,7 +29,7 @@ class MainFragment : Fragment() {
 
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
 
-    var PERMISSION_ID = 44
+    val PERMISSION_ID = 44
 
     private val locationCallBack = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
@@ -38,10 +39,14 @@ class MainFragment : Fragment() {
             progress.visibility = View.VISIBLE
             viewModel.getEiswarnung(
                 context!!,
-                mCurrentLocation!!.latitude.toString(),
+                mCurrentLocation.latitude.toString(),
                 mCurrentLocation.longitude.toString()
             )
-
+            SharedPrefUtil().setLastLocation(
+                mCurrentLocation.latitude.toString(),
+                mCurrentLocation.longitude.toString(),
+                context!!
+            )
         }
     }
 
@@ -153,13 +158,16 @@ class MainFragment : Fragment() {
                         progress.visibility = View.VISIBLE
 
                         viewModel.getEiswarnung(
-
                             context!!,
                             location.latitude.toString(),
                             location.longitude.toString()
                         )
-                        //latTextView.setText(location!!.getLatitude() + "")
-                        //lonTextView.setText(location!!.getLongitude() + "")
+
+                        SharedPrefUtil().setLastLocation(
+                            location.latitude.toString(),
+                            location.longitude.toString(),
+                            context!!
+                        )
                     }
                 }
             } else {
