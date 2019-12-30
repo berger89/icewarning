@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 class SharedPrefUtil {
     val SHARED_PREF_FROST_WARNING = "SHARED_PREF_FROST_WARNING"
-
+    val defaultPredictionHour: Long = 15
     fun getSharedPref(context: Context): SharedPreferences {
         return context.getSharedPreferences(SHARED_PREF_FROST_WARNING, 0)
     }
@@ -15,7 +15,7 @@ class SharedPrefUtil {
     }
 
     fun getTimePrediction(context: Context): Long {
-        return getSharedPref(context).getLong("time_prediction", 15)
+        return getSharedPref(context).getLong("time_prediction", defaultPredictionHour)
     }
 
     fun setLastLocation(lat: String, long: String, context: Context) {
@@ -23,6 +23,6 @@ class SharedPrefUtil {
     }
 
     fun setTimePrediction(hour: Long, context: Context) {
-        getSharedPref(context).edit().putLong("time_prediction", 15).apply()
+        getSharedPref(context).edit().putLong("time_prediction", hour).apply()
     }
 }

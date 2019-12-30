@@ -58,16 +58,10 @@ class PredictionDailyJob : DailyJob() {
     companion object {
 
         const val TAG = "MyDailyJob"
-        var startHour = TimeUnit.HOURS.toMillis(15)
+        private var startHour = SharedPrefUtil().defaultPredictionHour
 
         fun schedule(context: Context) {
-            startHour = TimeUnit.HOURS.toMillis(
-                context.getSharedPreferences("frostwarning", 0).getLong(
-                    "start",
-                    15
-                )
-            )
-
+            startHour = TimeUnit.HOURS.toMillis(SharedPrefUtil().getTimePrediction(context))
             schedule(
                 JobRequest.Builder(TAG),
                 startHour + 0,
