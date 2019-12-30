@@ -30,11 +30,20 @@ class SettingsAdapter(val settingsFragment: SettingsFragment, private val list: 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (position == 1) {
-            holder.imageViewSettings.visibility = View.INVISIBLE
-        } else if (position == 0) {
-            holder.imageViewSettingsOption.visibility = View.VISIBLE
+        when (position) {
+            0 -> {
+                holder.imageViewSettingsOption.visibility = View.VISIBLE
+                holder.imageViewSettingsCafe.visibility = View.INVISIBLE
+            }
+            3 -> {
+                holder.imageViewSettingsCafe.visibility = View.VISIBLE
+                holder.imageViewSettingsOption.visibility = View.INVISIBLE
+            }
+            else -> {
+                holder.imageViewSettings.visibility = View.INVISIBLE
+            }
         }
+
         var texts = list[position].split("/n")
 
         holder.textView.text = texts[0]
@@ -56,6 +65,7 @@ class SettingsAdapter(val settingsFragment: SettingsFragment, private val list: 
         var textViewDesc: TextView
         var imageViewSettings: ImageView
         var imageViewSettingsOption: ImageView
+        var imageViewSettingsCafe: ImageView
 
         override fun onClick(view: View) {
             when (adapterPosition) {
@@ -72,10 +82,16 @@ class SettingsAdapter(val settingsFragment: SettingsFragment, private val list: 
                 3 -> settingsFragment.startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://github.com/berger89/icewarning")
+                        Uri.parse("https://ko-fi.com/berger")
                     )
                 )
                 4 -> settingsFragment.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://github.com/berger89/icewarning")
+                    )
+                )
+                5 -> settingsFragment.startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
                         Uri.parse("http://www.eiswarnung.de/rest-api/")
@@ -97,6 +113,7 @@ class SettingsAdapter(val settingsFragment: SettingsFragment, private val list: 
             textViewDesc = itemView.findViewById(R.id.tv_settings_desc)
             imageViewSettings = itemView.findViewById(R.id.imageView_settings_next)
             imageViewSettingsOption = itemView.findViewById(R.id.imageView_settings_option)
+            imageViewSettingsCafe = itemView.findViewById(R.id.imageView_settings_cafe)
         }
     }
 

@@ -33,7 +33,8 @@ class SettingsFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
         val hour = SharedPrefUtil().getTimePrediction(context!!)
         list.add(getString(R.string.notification_time, hour))
         list.add("About Frost Warning/nVersion " + BuildConfig.VERSION_NAME)
-        list.add("Created by Alexander Berger/nVisit www.berger-apps.de")
+        list.add("Created by Berger/nVisit www.berger-apps.de")
+        list.add("Buy a Coffee for Berger/nko-fi.com/berger")
         list.add("Open Source/nSource Code is available on GitHub")
         list.add("Eiswarnung API/nUsing the Eiswarnung API")
 

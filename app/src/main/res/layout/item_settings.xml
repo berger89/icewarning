@@ -32,6 +32,18 @@
             app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
 
         <ImageView
+            android:id="@+id/imageView_settings_cafe"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="24dp"
+            android:tint="@color/colorAccent"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settings_desc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_settings"
+            app:srcCompat="@drawable/ic_local_cafe_white_48dp" />
+
+        <ImageView
             android:id="@+id/imageView_settings_next"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
